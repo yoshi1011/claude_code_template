@@ -13,6 +13,8 @@ services:
       - ${HOME}/.gitconfig:/home/claude/.gitconfig:ro
       # 作業ディレクトリ
       - ./workspace:/workspace
+      # 仕様書・設計ドキュメント（ホスト側で閲覧可能）
+      - ./plans:/workspace/plans
       # プロジェクト設定ファイル（entrypointでワークスペースにシンボリックリンク作成）
       - ./config:/home/claude/project-config
       # カスタムMCPサーバー

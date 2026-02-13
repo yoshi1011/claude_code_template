@@ -78,6 +78,19 @@ git clone git@github.com:your/project.git
 - ホストの`~/.gitconfig`が共有されます
 - macOSのSSH Agent Forwardingに対応しています
 
+## 仕様書・設計ドキュメントの同期
+
+`plans/` ディレクトリはコンテナ内の `/workspace/plans/` にマウントされます。Claude Code がコンテナ内で作成した仕様書や設計ドキュメントを、ホスト側でリアルタイムに閲覧できます。
+
+```
+plans/
+├── api-spec.md          # Claude が作成した仕様書
+├── architecture.md      # 設計ドキュメント
+└── ...
+```
+
+CLAUDE.md のデフォルト設定により、Claude Code はドキュメントを `/workspace/plans/` に出力します。`plans/` の中身はGit管理外のため、`git pull` の影響を受けません。
+
 ## プロジェクト設定のカスタマイズ
 
 `config/` ディレクトリでClaude Codeの動作をカスタマイズできます。設定ファイルは `.sample` テンプレートから生成され、**Git管理外**のためテンプレートの `git pull` で上書きされません。

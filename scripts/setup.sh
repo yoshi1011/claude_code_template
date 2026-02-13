@@ -49,6 +49,14 @@ for sample_file in "$PROJECT_DIR/config/.claude/commands"/*.md.sample; do
     generate_from_sample "$sample_file"
 done
 
+# plansディレクトリの作成
+if [ ! -d "$PROJECT_DIR/plans" ]; then
+    mkdir -p "$PROJECT_DIR/plans"
+    echo "[OK] plans ディレクトリを作成しました"
+else
+    echo "[OK] plans ディレクトリは既に存在します"
+fi
+
 # mcp-serversディレクトリの確認
 if [ -d "$PROJECT_DIR/mcp-servers" ]; then
     echo "[OK] mcp-servers ディレクトリは既に存在します"
@@ -74,3 +82,4 @@ echo "  config/CLAUDE.md              # Claude Code のルール設定"
 echo "  config/.claude/commands/      # カスタムスラッシュコマンド"
 echo "  config/.mcp.json              # MCPサーバー設定"
 echo "  mcp-servers/                  # カスタムMCPサーバーの配置先"
+echo "  plans/                        # 仕様書・設計ドキュメント（コンテナと同期）"

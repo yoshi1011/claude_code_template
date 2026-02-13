@@ -1,5 +1,7 @@
 .env
 workspace/
+plans/*
+!plans/.gitkeep
 .DS_Store
 *.log
 .idea/
