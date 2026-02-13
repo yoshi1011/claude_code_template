@@ -7,8 +7,8 @@ services:
     volumes:
       # 認証情報・設定の共有
       - ${HOME}/.claude:/home/claude/.claude
-      # SSH鍵（読み取り専用）
-      - ${HOME}/.ssh:/home/claude/.ssh:ro
+      # SSH鍵（読み取り専用、entrypointで~/.sshにコピー・加工される）
+      - ${HOME}/.ssh:/home/claude/.ssh_host:ro
       # Git設定（読み取り専用）
       - ${HOME}/.gitconfig:/home/claude/.gitconfig:ro
       # 作業ディレクトリ

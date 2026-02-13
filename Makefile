@@ -16,9 +16,9 @@ start:
 run:
 	docker compose run --rm claude-dev $(PROMPT)
 
-# コンテナ内にシェルで入る
+# コンテナ内にシェルで入る（entrypoint経由でSSH設定が初期化される）
 shell:
-	docker compose run --rm --entrypoint /bin/zsh claude-dev
+	docker compose run --rm claude-dev /bin/zsh
 
 # コンテナ・イメージの削除
 clean:

@@ -50,10 +50,13 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 # PATHにClaude Codeを追加
 ENV PATH="/home/claude/.claude/bin:/home/claude/.local/bin:${PATH}"
 
-# 起動スクリプトをコピー
+# スクリプトをコピー
+COPY --chown=claude:claude scripts/entrypoint.sh /home/claude/entrypoint.sh
 COPY --chown=claude:claude scripts/start.sh /home/claude/start.sh
-RUN chmod +x /home/claude/start.sh
+RUN chmod +x /home/claude/entrypoint.sh /home/claude/start.sh
 
 WORKDIR /workspace
 
-ENTRYPOINT ["/home/claude/start.sh"]
+# entrypoint.shでSSH設定等の初期化を行い、CMDで指定されたコマンドを実行
+ENTRYPOINT ["/home/claude/entrypoint.sh"]
+CMD ["/home/claude/start.sh"]
