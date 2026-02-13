@@ -25,12 +25,29 @@ else
     echo "[OK] .env ファイルは既に存在します"
 fi
 
-# configディレクトリの確認
-if [ -d "$PROJECT_DIR/config" ]; then
-    echo "[OK] config ディレクトリは既に存在します"
-else
-    echo "[WARN] config ディレクトリが見つかりません"
-fi
+# 設定ファイルの生成（.sample からコピー）
+generate_from_sample() {
+    local sample="$1"
+    local target="${sample%.sample}"
+    if [ -f "$sample" ] && [ ! -f "$target" ]; then
+        cp "$sample" "$target"
+        echo "[OK] $(basename "$target") を作成しました（$(basename "$sample") からコピー）"
+    elif [ -f "$target" ]; then
+        echo "[OK] $(basename "$target") は既に存在します"
+    fi
+}
+
+# config/ 配下の設定ファイルを生成
+echo ""
+echo "--- 設定ファイルの生成 ---"
+generate_from_sample "$PROJECT_DIR/config/CLAUDE.md.sample"
+generate_from_sample "$PROJECT_DIR/config/.mcp.json.sample"
+mkdir -p "$PROJECT_DIR/config/.claude/commands"
+generate_from_sample "$PROJECT_DIR/config/.claude/settings.json.sample"
+for sample_file in "$PROJECT_DIR/config/.claude/commands"/*.md.sample; do
+    [ -f "$sample_file" ] || continue
+    generate_from_sample "$sample_file"
+done
 
 # mcp-serversディレクトリの確認
 if [ -d "$PROJECT_DIR/mcp-servers" ]; then

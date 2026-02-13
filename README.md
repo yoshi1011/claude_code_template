@@ -14,7 +14,7 @@ Claude Codeをほぼパーミッションフリーで実行するためのDocker
 # 1. リポジトリをクローン
 git clone <this-repo> && cd claude_code_template
 
-# 2. 初回セットアップ（workspace作成、.envコピー、イメージビルド）
+# 2. 初回セットアップ（workspace作成、.envコピー、設定ファイル生成、イメージビルド）
 make setup
 ```
 
@@ -80,15 +80,24 @@ git clone git@github.com:your/project.git
 
 ## プロジェクト設定のカスタマイズ
 
-`config/` ディレクトリでClaude Codeの動作をカスタマイズできます。コンテナ起動時に `entrypoint.sh` が各ファイルを `/workspace` にシンボリックリンクとして配置します。
+`config/` ディレクトリでClaude Codeの動作をカスタマイズできます。設定ファイルは `.sample` テンプレートから生成され、**Git管理外**のためテンプレートの `git pull` で上書きされません。
 
-**ワークスペースのプロジェクトに同名ファイルが存在する場合はリンクをスキップ**し、プロジェクト側の設定が優先されます。
+```bash
+# 初回セットアップ時に自動生成されます（make setup）
+# 手動で生成する場合:
+cp config/CLAUDE.md.sample config/CLAUDE.md
+cp config/.mcp.json.sample config/.mcp.json
+cp config/.claude/settings.json.sample config/.claude/settings.json
+cp config/.claude/commands/review.md.sample config/.claude/commands/review.md
+```
 
-| ファイル | 用途 |
-|---------|------|
-| `config/CLAUDE.md` | Claude Code のルール・指示設定 |
-| `config/.claude/settings.json` | プロジェクト設定 |
-| `config/.mcp.json` | MCPサーバー設定 |
+コンテナ起動時に `entrypoint.sh` が各ファイルを `/workspace` にシンボリックリンクとして配置します。**ワークスペースのプロジェクトに同名ファイルが存在する場合はリンクをスキップ**し、プロジェクト側の設定が優先されます。
+
+| テンプレート | 生成ファイル | 用途 |
+|------------|------------|------|
+| `config/CLAUDE.md.sample` | `config/CLAUDE.md` | Claude Code のルール・指示設定 |
+| `config/.claude/settings.json.sample` | `config/.claude/settings.json` | プロジェクト設定 |
+| `config/.mcp.json.sample` | `config/.mcp.json` | MCPサーバー設定 |
 
 ホスト側で `config/CLAUDE.md` を編集すると、シンボリックリンク経由でコンテナ内にも即時反映されます。
 
@@ -103,7 +112,7 @@ config/.claude/commands/
 
 コマンドファイル内で `$ARGUMENTS` を使うと、スラッシュコマンドの引数が展開されます。
 
-例: `config/.claude/commands/review.md`
+サンプルの `review.md.sample` が同梱されています。例: `config/.claude/commands/review.md`
 
 ```markdown
 以下のコードをレビューしてください。

@@ -4,3 +4,9 @@ workspace/
 *.log
 .idea/
 docker-compose.override.yml
+
+# ユーザー設定ファイル（.sample からコピーして使用）
+config/CLAUDE.md
+config/.mcp.json
+config/.claude/settings.json
+config/.claude/commands/*.md
