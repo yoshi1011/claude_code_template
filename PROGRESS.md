@@ -13,6 +13,18 @@
 - [x] Makefile の作成
 - [x] README.md の作成
 
+### 設定ファイル・Skills・MCPサーバーの管理構造
+
+- [x] Dockerfile に Python 3 + uv を追加
+- [x] config/ ディレクトリの作成（CLAUDE.md, settings.json, commands/review.md, .mcp.json）
+- [x] mcp-servers/ ディレクトリの作成（.gitkeep, README.md）
+- [x] entrypoint.sh にシンボリックリンク処理を追加
+- [x] docker-compose.yml にボリュームマウント追加
+- [x] docker-compose.override.yml.example の作成
+- [x] setup.sh の更新
+- [x] README.md のドキュメント追加
+- [x] .gitignore に docker-compose.override.yml を追加
+
 ## 検証項目
 
 - [ ] `make setup && make build` でエラーなくビルドできること
@@ -21,3 +33,8 @@
 - [ ] コンテナ内で `git config user.name` がホストと同じ値を返すこと
 - [ ] `--dangerously-skip-permissions` でパーミッション確認なしに動作すること
 - [ ] コンテナ再起動後もOAuth認証が維持されること
+- [ ] `make shell` で `python3 --version`, `uv --version` が動作すること
+- [ ] ワークスペース空の状態でシンボリックリンクが作成されること
+- [ ] ワークスペースに既存ファイルがある場合はリンクがスキップされること
+- [ ] ホスト側 config/ の編集がコンテナ内に即時反映されること
+- [ ] `/review` カスタムコマンドが利用可能なこと
