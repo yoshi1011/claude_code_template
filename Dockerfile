@@ -21,6 +21,16 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
+# Python 3 のインストール（MCP サーバー対応）
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    && rm -rf /var/lib/apt/lists/*
+
+# uv パッケージマネージャーのインストール
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 # GitHub CLI のインストール
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
     | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
