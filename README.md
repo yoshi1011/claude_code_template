@@ -89,6 +89,7 @@ git clone git@github.com:your/project.git
 
 - macOSの場合、Docker Desktopで「Allow the default Docker socket to be used」が有効か確認
 - `make shell`でコンテナに入り、`ssh -T git@github.com`で接続テスト
+- macOSの`UseKeychain`等のSSHオプションはentrypoint.shで自動的に`IgnoreUnknown`が付与されるため、通常は問題になりません
 
 ### パーミッションエラーが発生する
 
