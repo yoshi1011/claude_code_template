@@ -5,25 +5,30 @@ services:
       dockerfile: Dockerfile
     container_name: claude-dev
     volumes:
-      # 認証情報・設定の共有
-      - ${HOME}/.claude:/home/claude/.claude
-      # SSH鍵（読み取り専用、entrypointで~/.sshにコピー・加工される）
-      - ${HOME}/.ssh:/home/claude/.ssh_host:ro
-      # Git設定（読み取り専用）
-      - ${HOME}/.gitconfig:/home/claude/.gitconfig:ro
+      # Claude Code 認証データ（プロジェクトローカル、ホスト非共有）
+      - ./claude-auth:/home/claude/.claude
+      # プロジェクト専用SSH鍵（ローカルから投入、読み取り専用）
+      - ./ssh-keys:/home/claude/.ssh_host:ro
+      # Git設定（プロジェクトローカル、読み取り専用）
+      - ./config/.gitconfig:/home/claude/.gitconfig:ro
       # 作業ディレクトリ
       - ./workspace:/workspace
       # 仕様書・設計ドキュメント（ホスト側で閲覧可能）
       - ./plans:/workspace/plans
-      # プロジェクト設定ファイル（entrypointでワークスペースにシンボリックリンク作成）
-      - ./config:/home/claude/project-config
-      # カスタムMCPサーバー
-      - ./mcp-servers:/home/claude/mcp-servers
-      # SSH Agent フォワーディング（macOS対応）
-      - ${SSH_AUTH_SOCK:-/run/host-services/ssh-auth.sock}:/run/host-services/ssh-auth.sock
-    environment:
-      - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+      # プロジェクト設定ファイル（読み取り専用）
+      - ./config:/home/claude/project-config:ro
+      # カスタムMCPサーバー（読み取り専用）
+      - ./mcp-servers:/home/claude/mcp-servers:ro
     env_file:
       - .env
     stdin_open: true
     tty: true
+    # セキュリティ強化
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID

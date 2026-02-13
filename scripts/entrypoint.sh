@@ -3,13 +3,13 @@
 
 set -e
 
-# ホストのSSH設定をコピーし、macOS固有オプションをLinuxで動作するよう加工
+# プロジェクト専用SSH鍵をコピーし、macOS固有オプションをLinuxで動作するよう加工
 if [ -d /home/claude/.ssh_host ]; then
     mkdir -p /home/claude/.ssh
-    # 鍵ファイル等をコピー（既存のknown_hostsは保持）
+    # プロジェクト専用鍵ファイルをコピー（既存のknown_hostsは保持）
     cp -n /home/claude/.ssh_host/* /home/claude/.ssh/ 2>/dev/null || true
 
-    # configファイルにIgnoreUnknownを先頭に追加してLinux互換にする
+    # configファイルにIgnoreUnknownを先頭に追加してLinux互換にする（macOS由来の設定に対応）
     if [ -f /home/claude/.ssh_host/config ]; then
         echo "IgnoreUnknown UseKeychain,AddKeysToAgent" > /home/claude/.ssh/config
         cat /home/claude/.ssh_host/config >> /home/claude/.ssh/config

@@ -7,8 +7,13 @@ plans/*
 .idea/
 docker-compose.override.yml
 
+# 認証・鍵データ（プロジェクトローカル、機密情報を含む）
+claude-auth/
+ssh-keys/
+
 # ユーザー設定ファイル（.sample からコピーして使用）
 config/CLAUDE.md
 config/.mcp.json
+config/.gitconfig
 config/.claude/settings.json
 config/.claude/commands/*.md

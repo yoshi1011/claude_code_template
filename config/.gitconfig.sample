@@ -1,0 +1,8 @@
+[user]
+    name = Your Name
+    email = your-email@example.com
+[init]
+    defaultBranch = main
+[push]
+    default = current
+    autoSetupRemote = true
