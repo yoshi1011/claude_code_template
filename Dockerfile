@@ -48,7 +48,7 @@ RUN mkdir -p /home/claude/.ssh \
 RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # PATHにClaude Codeを追加
-ENV PATH="/home/claude/.claude/bin:${PATH}"
+ENV PATH="/home/claude/.claude/bin:/home/claude/.local/bin:${PATH}"
 
 # 起動スクリプトをコピー
 COPY --chown=claude:claude scripts/start.sh /home/claude/start.sh
