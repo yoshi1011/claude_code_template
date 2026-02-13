@@ -13,6 +13,10 @@ services:
       - ${HOME}/.gitconfig:/home/claude/.gitconfig:ro
       # 作業ディレクトリ
       - ./workspace:/workspace
+      # プロジェクト設定ファイル（entrypointでワークスペースにシンボリックリンク作成）
+      - ./config:/home/claude/project-config
+      # カスタムMCPサーバー
+      - ./mcp-servers:/home/claude/mcp-servers
       # SSH Agent フォワーディング（macOS対応）
       - ${SSH_AUTH_SOCK:-/run/host-services/ssh-auth.sock}:/run/host-services/ssh-auth.sock
     environment:
