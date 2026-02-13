@@ -24,6 +24,7 @@
 - [x] setup.sh の更新
 - [x] README.md のドキュメント追加
 - [x] .gitignore に docker-compose.override.yml を追加
+- [x] config ファイルを .sample テンプレート方式に変更（git pull 安全化）
 
 ## 検証項目
 
@@ -38,3 +39,5 @@
 - [ ] ワークスペースに既存ファイルがある場合はリンクがスキップされること
 - [ ] ホスト側 config/ の編集がコンテナ内に即時反映されること
 - [ ] `/review` カスタムコマンドが利用可能なこと
+- [ ] `make setup` で .sample から設定ファイルが生成されること
+- [ ] `git pull` で config/ のユーザー設定が上書きされないこと
