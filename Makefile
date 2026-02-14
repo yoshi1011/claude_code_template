@@ -10,7 +10,7 @@ build:
 
 # Claude Code起動（インタラクティブモード）
 start:
-	docker compose run --rm claude-dev
+	@docker compose run --rm claude-dev || true
 
 # プロンプト付き実行（例: make run PROMPT="Hello"）
 run:

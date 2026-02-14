@@ -23,6 +23,7 @@ services:
       - .env
     stdin_open: true
     tty: true
+    init: true
     # セキュリティ強化
     security_opt:
       - no-new-privileges:true
